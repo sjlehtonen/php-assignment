@@ -17,6 +17,8 @@ class AveragePostsPerUserPerMonthCalculator extends AbstractCalculator
     private const POSTS_KEY = 'posts';
     private const AUTHORS_KEY = 'authors';
 
+    private const POSTS_ROUNDING_PRECISION = 2;
+
     /**
      * @var array
      */
@@ -51,7 +53,7 @@ class AveragePostsPerUserPerMonthCalculator extends AbstractCalculator
             $child = (new StatisticsTo())
                 ->setName($this->parameters->getStatName())
                 ->setSplitPeriod(sprintf("Month %d", $month))
-                ->setValue(round($average, 2))
+                ->setValue(round($average, self::POSTS_ROUNDING_PRECISION))
                 ->setUnits(self::UNITS);
 
             $stats->addChild($child);
