@@ -31,7 +31,7 @@ class AveragePostsPerUserPerMonthCalculator extends AbstractCalculator
      */
     protected function doAccumulate(SocialPostTo $postTo): void
     {
-        $postMonth = intval($postTo->getdate()->format('m'));
+        $postMonth = $postTo->getdate()->format('\M\o\n\t\h n');
         $authorId = $postTo->getAuthorId();
         if (!array_key_exists($postMonth, $this->postsAndUsersPerMonth)) {
             $this->postsAndUsersPerMonth[$postMonth] = array(self::AUTHORS_KEY => [], self::POSTS_KEY => 0);
@@ -52,7 +52,7 @@ class AveragePostsPerUserPerMonthCalculator extends AbstractCalculator
             
             $child = (new StatisticsTo())
                 ->setName($this->parameters->getStatName())
-                ->setSplitPeriod(sprintf("Month %d", $month))
+                ->setSplitPeriod($month)
                 ->setValue(round($average, self::POSTS_ROUNDING_PRECISION))
                 ->setUnits(self::UNITS);
 
